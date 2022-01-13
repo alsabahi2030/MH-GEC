@@ -182,8 +182,6 @@ def main(args):
             if args.max_len == 50:
                 cor_path = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}.cor"
                 edits_file = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}.gedit"
-                annotation_file = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}.ann"
-                cor_basename = util.get_basename(cor_path, include_extension=False)
 
             else:
                 if args.weights:
@@ -191,18 +189,13 @@ def main(args):
                     w = '.'.join(w)
                     cor_path = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}x{args.max_len}.{w}.cor"
                     edits_file = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}x{args.max_len}.{w}.gedit"
-                    annotation_file = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}x{args.max_len}.{w}.ann"
                 elif args.lamda < 1:
                     cor_path = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}x{args.max_len}.l{args.lamda}.cor"
                     edits_file = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}x{args.max_len}.l{args.lamda}.gedit"
-                    annotation_file = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}x{args.max_len}.l{args.lamda}.ann"
                 else:
                     cor_path = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}x{args.max_len}.cor"
                     edits_file = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}x{args.max_len}.gedit"
-                    annotation_file = f"{output_file}.mp{args.min_error_probability}.cf{args.additional_confidence}x{args.max_len}.ann"
                 cor_basename = util.get_basename(cor_path, include_extension=False)
-                #edits_file = f"{cor_basename}.gedit"
-                #annotation_file = f"{cor_basename}.ann"
             cor_files.append(cor_path)
             if (not os.path.isfile(cor_path) and not args.find_best) or args.overwrite:
                 model = GecBERTModel(vocab_path=vocab_path,
